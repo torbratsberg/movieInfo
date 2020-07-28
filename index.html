@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Movie info finder</title>
+</head>
+<body>
+    <div id="container">
+        <div id="innerContainer">
+
+            <h1 id="pageTitle">Look up any movie</h1>
+
+            <input id="searchInput" onchange="" type="text" placeholder="Enter a movie title">
+
+            <ul id="searchResults">
+
+            </ul>
+
+            <h1 id="movieTitle"></h1>
+
+            <h1 id="movieTagline"></h1>
+
+            <div id="dividerLine"></div>
+
+            <h2 id="movieDirectors"></h2>
+
+            <h2 id="movieYear"></h2>
+
+            <h3 id="movieCountry"></h3>
+            
+            <h3 id="movieLength"></h3>
+
+            <h3 class="ratings" id="imdbRating"></h3>
+            
+            <h3 class="ratings" id="metacriticRating"></h3>
+            
+            <h3 id="movieAwards"></h3>
+
+            <p id="moviePlot"></p>            
+            
+            <img id="moviePoster" src="" style="z-index: 10;">
+
+        </div>
+
+        <div id="footer">
+            <p>All received by IMDb API.</p>
+            <p>Made by <a href="http://tor.bratsberg.net" target="_blank">Tor Bratsberg</a></p>
+        </div>
+
+    </div>
+
+    <script src="jquery-3.5.1.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
