@@ -11,15 +11,6 @@ function searchTitles() {
     $('#searchResults').css('display', 'inline');
 
     $('#movieTitle, h2, h3, p').text('');
-    // $('#movieTitle').text('');
-    // $('#movieTagline').text('');
-    // $('#movieDirectors').text('');
-    // $('#movieYear').text('');
-    // $('#movieLength').text('');
-    // $('.ratings').text('');
-    // $('#movieCountry').text('');
-    // $('#movieAwards').text('');
-    // $('#moviePlot').text('');
     $('#moviePoster').attr('src', '');
 
     let searchInput = $('#searchInput').val();
@@ -44,9 +35,6 @@ function getTitleId(searchTitle) {
 
 // Gets movie ID from getTitleId() and requests more info from IMDb api
 function getMovieData(id) {
-    // Add IMDb ID to URL
-    new URL('/?id=' + id, window.location.href)
-
     let settings = {
         "url": "https://imdb-api.com/en/API/Title/k_O8Bn78pa/" + id + "/FullActor,FullCast,Posters,Images,Trailer,Ratings,",
         "method": "GET",
@@ -77,10 +65,4 @@ function getMovieData(id) {
         $('#moviePlot').text(response.plot);
         $('#moviePoster').attr('src', response.image);
     });
-}
-
-function urlVar() {
-    let str = window.location.href;
-    let res = str.match(/[a-z]+[0-9]+/g);
-    return(res[0]);
 }
