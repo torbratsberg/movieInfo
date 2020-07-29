@@ -10,7 +10,7 @@ searchInput.addEventListener("keydown", function (e) {
 function searchTitles() {
     $('#searchResults').css('display', 'inline');
 
-    $('#movieTitle, h2, h3, p').text('');
+    $('#movieTitle, h2, h3, #moviePlot').text('');
     $('#moviePoster').attr('src', '');
 
     let searchInput = $('#searchInput').val();
@@ -35,6 +35,9 @@ function getTitleId(searchTitle) {
 
 // Gets movie ID from getTitleId() and requests more info from IMDb api
 function getMovieData(id) {
+
+    window.location.href = "http://tor.bratsberg.net/movieInfo/index.html/?id=" + id;
+
     let settings = {
         "url": "https://imdb-api.com/en/API/Title/k_O8Bn78pa/" + id + "/FullActor,FullCast,Posters,Images,Trailer,Ratings,",
         "method": "GET",
@@ -66,3 +69,29 @@ function getMovieData(id) {
         $('#moviePoster').attr('src', response.image);
     });
 }
+
+function urlVar() {
+    // Put URL into STR
+    let str = window.location.href;
+
+    // Define regex
+    let myRegex = /[a-z]+[0-9]+/g;
+    
+    // Regex match movie id
+    let checkURL = myRegex.test(str);
+    
+    // Call getMovieData() with id stored in URL
+    if(checkURL == false) {
+        console.log('Could not find movie ID in URL');
+    } else if(checkURL == true) {
+        console.log('Found movie ID in URL');
+
+        // Find movie ID in URL
+        let movieId = str.match(myRegex)[0];
+    
+        // Run getMovieData with the movie ID found in URL
+        getMovieData(movieId);
+    }
+}
+
+urlVar();
