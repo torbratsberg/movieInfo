@@ -32,7 +32,7 @@ function getTitleId(searchTitle) {
     
     $.ajax(settings).done(function (response) {
         $('#loadingSpinnerContainer').css('display', 'none');
-        
+
         for (let i = 0; i < response.results.length; i++) {
             // Add each movie found to the search results list with title and description
             $('#searchResults').append('<li><button onClick="getMovieData(\'' + response.results[i].id + '\')">' + response.results[i].title + ' ' + response.results[i].description + '</button></li>');
@@ -85,7 +85,7 @@ function urlVar() {
     let checkURL = regex.test(url);
     
     // Call getMovieData() with id stored in URL
-    if(checkURL == true) {
+    if (checkURL == true) {
         // Find movie ID in URL
         let movieId = url.match(regex)[0];
         
@@ -95,6 +95,7 @@ function urlVar() {
 }
 
 function displayInfo(response) {
+    console.log(response);
     $('#loadingSpinnerContainer').css('display', 'none');
     
     // Display data from IMDb API in DOM
@@ -105,7 +106,11 @@ function displayInfo(response) {
     $('#movieCountry').text(response.countries);
     $('#movieLength').text(response.runtimeStr);
     $('#imdbRating').text((response.imDbRating * 10) + ' / 100 on IMDb');
-    $('#metacriticRating').text(response.metacriticRating + ' / 100 on Metacritic');
+    if (response.metacriticRating != "") {
+        $('#metacriticRating').text(response.metacriticRating + ' / 100 on Metacritic');
+    } else if (response.metacriticRating == "") {
+        $('#metacriticRating').text();
+    }
     $('#movieAwards').text(response.awards);
     $('#moviePlot').text(response.plot);
     $('#moviePoster').attr('src', response.image);
