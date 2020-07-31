@@ -8,11 +8,14 @@ searchInput.addEventListener("keydown", function (e) {
 
 // Displays search results list and clears all the data from previous movie and runs getTitleId()
 function searchTitles() {
+    //Show results section
     $('#searchResults').css('display', 'inline');
 
-    $('#movieTitle, h2, h3, #moviePlot').text('');
+    // Remove earlier movie info
+    $('#movieTitle, #movieTagline, h2, h3, #moviePlot').text('');
     $('#moviePoster').attr('src', '');
 
+    // Get movie name from search bar and run getTitleId()
     let searchInput = $('#searchInput').val();
     getTitleId(searchInput);
 }
@@ -35,8 +38,8 @@ function getTitleId(searchTitle) {
 
 // Gets movie ID from getTitleId() and requests more info from IMDb api
 function getMovieData(id) {
-
-    window.location.href = "http://tor.bratsberg.net/movieInfo/index.html/?id=" + id;
+    // Put movie ID in URL
+    history.pushState({}, '', '?id=' + id);
 
     let settings = {
         "url": "https://imdb-api.com/en/API/Title/k_O8Bn78pa/" + id + "/FullActor,FullCast,Posters,Images,Trailer,Ratings,",
@@ -45,8 +48,6 @@ function getMovieData(id) {
     };
     
     $.ajax(settings).done(function (response) {
-        console.log(response);
-
         // Clear search field
         $('#searchInput').val('');
 
@@ -77,15 +78,13 @@ function urlVar() {
     // Define regex
     let myRegex = /[a-z]+[0-9]+/g;
     
-    // Regex match movie id
+    // Check if there is a variable in URL
     let checkURL = myRegex.test(str);
     
     // Call getMovieData() with id stored in URL
     if(checkURL == false) {
         console.log('Could not find movie ID in URL');
     } else if(checkURL == true) {
-        console.log('Found movie ID in URL');
-
         // Find movie ID in URL
         let movieId = str.match(myRegex)[0];
     
