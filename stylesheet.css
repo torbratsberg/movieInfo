@@ -55,7 +55,7 @@ ul{
 }
 
 img{
-    height: 90vw;
+    width: 100%;
     margin: 50px auto 0px auto;
 }
 
@@ -227,9 +227,17 @@ button:after{
     #container {
         width: 100%;
     }
+    
+    #innerContainer {
+        padding: 40px;
+    }
+    
+    img {
+        width: 100%;
+    }
 
     h1 {
-        font-size: 35px;
+        font-size: 34px;
     }
     
     #movieTagline {
@@ -246,6 +254,10 @@ button:after{
     
     p {
         font-size: 18px;
+    }
+    
+    input {
+        width: 50%
     }
     
     #footer{

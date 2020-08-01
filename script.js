@@ -109,7 +109,7 @@ function displayInfo(response) {
     if (response.metacriticRating != "") {
         $('#metacriticRating').text(response.metacriticRating + ' / 100 on Metacritic');
     } else if (response.metacriticRating == "") {
-        $('#metacriticRating').text();
+        $('#metacriticRating').text('');
     }
     $('#movieAwards').text(response.awards);
     $('#moviePlot').text(response.plot);
