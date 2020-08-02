@@ -40,10 +40,11 @@ function getTitleId(searchTitle) {
 
             $('#movieTitle').text('Out of API calls, come back tomorrow.');
         } else {
-            for (let i = 0; i < response.results.length; i++) {
-                // Add each movie found to the search results list with title and description
+            let i = 0;
+            response.results.forEach(element => {
                 $('#searchResults').append('<li><button onClick="getMovieData(\'' + response.results[i].id + '\')">' + response.results[i].title + ' ' + response.results[i].description + '</button></li>');
-            }
+                i++;
+            });
         }
     });
 }
