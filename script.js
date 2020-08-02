@@ -1,26 +1,18 @@
-// Listens to if enter is pressed in search field and runs searchTitles()
-var searchInput = document.getElementById("searchInput");
-searchInput.addEventListener("keydown", (e) => {
+let searchInput = document.getElementById("searchInput");
+searchInput.addEventListener("keydown", e => {
     if (e.keyCode === 13) {
         searchTitles();
     }
 });
 
-// Displays search results list and clears all the data from previous movie and runs getTitleId()
 function searchTitles() {
-    //Show results section
     $('#searchResults').css('display', 'inline');
-
-    // Remove earlier movie info
     $('#movieTitle, #movieTagline, h2, h3, #moviePlot').text('');
     $('#moviePoster').attr('src', '');
 
-    // Get movie name from search bar and run getTitleId()
-    let searchInput = $('#searchInput').val();
-    getTitleId(searchInput);
+    getTitleId($('#searchInput').val());
 }
 
-// Requests movies with the name searched from IMDb api and displays the results
 function getTitleId(searchTitle) {
     $('#loadingSpinnerContainer').css('display', 'flex');
 
@@ -30,18 +22,16 @@ function getTitleId(searchTitle) {
         "timeout": 0,
     };
 
-    $.ajax(settings).done((response) => {
+    $.ajax(settings).done(response => {
         $('#loadingSpinnerContainer').css('display', 'none');
 
         if (response.results == null) {
-            // Remove earlier movie info
             $('#movieTitle, #movieTagline, h2, h3, #moviePlot').text('');
             $('#moviePoster').attr('src', '');
-
             $('#movieTitle').text('Out of API calls, come back tomorrow.');
         } else {
             let i = 0;
-            response.results.forEach(element => {
+            response.results.forEach(() => {
                 $('#searchResults').append('<li><button onClick="getMovieData(\'' + response.results[i].id + '\')">' + response.results[i].title + ' ' + response.results[i].description + '</button></li>');
                 i++;
             });
@@ -49,19 +39,13 @@ function getTitleId(searchTitle) {
     });
 }
 
-// Gets movie ID from getTitleId() and requests more info from IMDb api
 function getMovieData(id) {
-    // Clear search field
     $('#searchInput').val('');
-
     $('#loadingSpinnerContainer').css('display', 'flex');
-
-    // Remove search results and empty list
     $('#searchResults').css('display', 'none');
     $('li').remove();
     $('button').remove();
 
-    // Put movie ID in URL
     history.pushState({}, '', '?id=' + id);
 
     let settings = {
@@ -70,15 +54,11 @@ function getMovieData(id) {
         "timeout": 0,
     };
 
-    $.ajax(settings).done((response) => {
-        // In case IMDb API returns 'null'
+    $.ajax(settings).done(response => {
         if (response.title == null) {
-            // Remove earlier movie info
             $('#movieTitle, #movieTagline, h2, h3, #moviePlot').text('');
             $('#moviePoster').attr('src', '');
-
             $('#movieTitle').text('Something went wrong, try another movie');
-
         } else {
             displayInfo(response);
         }
@@ -87,18 +67,11 @@ function getMovieData(id) {
 
 
 function urlVar() {
-    let url = window.location.href;
     let regex = /[a-z]+[0-9]+/g;
-
-    // Check if there is a variable in URL
-    let checkURL = regex.test(url);
-
-    // Call getMovieData() with id stored in URL
+    let checkURL = regex.test(window.location.href);
+    
     if (checkURL == true) {
-        // Find movie ID in URL
         let movieId = url.match(regex)[0];
-
-        // Run getMovieData with the movie ID found in URL
         getMovieData(movieId);
     }
 }
@@ -106,8 +79,6 @@ function urlVar() {
 function displayInfo(response) {
     console.log(response);
     $('#loadingSpinnerContainer').css('display', 'none');
-
-    // Display data from IMDb API in DOM
     $('#movieTitle').text('| ' + response.title);
     $('#movieTagline').text(response.tagline);
     $('#movieDirectors').text('Directed by: ' + response.directors);
