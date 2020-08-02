@@ -1,6 +1,6 @@
 // Listens to if enter is pressed in search field and runs searchTitles()
 var searchInput = document.getElementById("searchInput");
-searchInput.addEventListener("keydown", function (e) {
+searchInput.addEventListener("keydown", (e) => {
     if (e.keyCode === 13) {
         searchTitles();
     }
@@ -29,13 +29,21 @@ function getTitleId(searchTitle) {
         "method": "GET",
         "timeout": 0,
     };
-    
-    $.ajax(settings).done(function (response) {
+
+    $.ajax(settings).done((response) => {
         $('#loadingSpinnerContainer').css('display', 'none');
 
-        for (let i = 0; i < response.results.length; i++) {
-            // Add each movie found to the search results list with title and description
-            $('#searchResults').append('<li><button onClick="getMovieData(\'' + response.results[i].id + '\')">' + response.results[i].title + ' ' + response.results[i].description + '</button></li>');
+        if (response.results == null) {
+            // Remove earlier movie info
+            $('#movieTitle, #movieTagline, h2, h3, #moviePlot').text('');
+            $('#moviePoster').attr('src', '');
+
+            $('#movieTitle').text('Out of API calls, come back tomorrow.');
+        } else {
+            for (let i = 0; i < response.results.length; i++) {
+                // Add each movie found to the search results list with title and description
+                $('#searchResults').append('<li><button onClick="getMovieData(\'' + response.results[i].id + '\')">' + response.results[i].title + ' ' + response.results[i].description + '</button></li>');
+            }
         }
     });
 }
@@ -51,25 +59,25 @@ function getMovieData(id) {
     $('#searchResults').css('display', 'none');
     $('li').remove();
     $('button').remove();
-    
+
     // Put movie ID in URL
     history.pushState({}, '', '?id=' + id);
-    
+
     let settings = {
         "url": "https://imdb-api.com/en/API/Title/k_O8Bn78pa/" + id + "/FullActor,FullCast,Posters,Images,Trailer,Ratings,",
         "method": "GET",
         "timeout": 0,
     };
-    
-    $.ajax(settings).done(function (response) {
+
+    $.ajax(settings).done((response) => {
         // In case IMDb API returns 'null'
         if (response.title == null) {
             // Remove earlier movie info
             $('#movieTitle, #movieTagline, h2, h3, #moviePlot').text('');
             $('#moviePoster').attr('src', '');
-            
-            $('#movieTitle').text('Something went wrong, try another movie' );
-            
+
+            $('#movieTitle').text('Something went wrong, try another movie');
+
         } else {
             displayInfo(response);
         }
@@ -80,15 +88,15 @@ function getMovieData(id) {
 function urlVar() {
     let url = window.location.href;
     let regex = /[a-z]+[0-9]+/g;
-    
+
     // Check if there is a variable in URL
     let checkURL = regex.test(url);
-    
+
     // Call getMovieData() with id stored in URL
     if (checkURL == true) {
         // Find movie ID in URL
         let movieId = url.match(regex)[0];
-        
+
         // Run getMovieData with the movie ID found in URL
         getMovieData(movieId);
     }
@@ -97,7 +105,7 @@ function urlVar() {
 function displayInfo(response) {
     console.log(response);
     $('#loadingSpinnerContainer').css('display', 'none');
-    
+
     // Display data from IMDb API in DOM
     $('#movieTitle').text('| ' + response.title);
     $('#movieTagline').text(response.tagline);
