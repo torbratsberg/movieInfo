@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+Pro:ital@0;1&display=swap');
+:root {
+  --main-text-color: #ffffff;
+}
 
 body{
     margin: 0;
@@ -19,31 +22,31 @@ body{
 }
 
 h1{
-    color: #ffffff;
+    color: var(--main-text-color);
     font-family: 'Playfair Display', serif;
     font-size: 50px;
 }
 
 h2{
-    color: #ffffff;
+    color: var(--main-text-color);
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 30px;
 }
 
 h3{
-    color: #ffffff;
+    color: var(--main-text-color);
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 20px
 }
 
 p{
-    color: #ffffff;
+    color: var(--main-text-color);
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 16px;
 }
 
 a{
-    color: #ffffff;
+    color: var(--main-text-color);
 }
 
 ul{
@@ -76,7 +79,7 @@ input{
     width: 98%;
     transition-duration: 0.5s;
     background: linear-gradient(90deg, #ffffff00 0%, #ffffff00 100%);
-    color: #ffffff;
+    color: var(--main-text-color);
     border: solid 2px #ffffff;
     margin: 0px 0 0 0;
 }
@@ -153,7 +156,7 @@ button:after{
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #fff;
+    background: #ffffff;
     margin: -4px 0 0 -4px;
   }
   .lds-roller div:nth-child(1) {
